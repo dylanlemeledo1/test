@@ -1,5 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
+import { Navbar } from "@/components/sections/Navbar";
+import { Footer } from "@/components/sections/Footer";
 import "./globals.css";
 
 const inter = Inter({
@@ -75,7 +77,9 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${mono.variable} dark`}>
       <body className="min-h-screen antialiased selection:bg-violet-500/40">
-        {children}
+        <Navbar />
+        <main className="relative overflow-hidden">{children}</main>
+        <Footer />
       </body>
     </html>
   );

@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import Link from "next/link";
 import { motion, type HTMLMotionProps } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -78,14 +79,30 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     );
 
     if (href) {
+      const isExternal = /^(https?:)?\/\//.test(href) || href.startsWith("mailto:") || href.startsWith("tel:");
+      const MotionLink = motion.create(Link);
+      const sharedClass = cn(baseStyles, variantStyles[variant], sizeStyles[size], className);
+      if (isExternal) {
+        return (
+          <motion.a
+            href={href}
+            target="_blank"
+            rel="noopener noreferrer"
+            whileTap={{ scale: 0.97 }}
+            className={sharedClass}
+          >
+            {inner}
+          </motion.a>
+        );
+      }
       return (
-        <motion.a
+        <MotionLink
           href={href}
           whileTap={{ scale: 0.97 }}
-          className={cn(baseStyles, variantStyles[variant], sizeStyles[size], className)}
+          className={sharedClass}
         >
           {inner}
-        </motion.a>
+        </MotionLink>
       );
     }
 

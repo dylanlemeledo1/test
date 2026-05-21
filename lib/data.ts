@@ -12,11 +12,51 @@ import {
 } from "lucide-react";
 
 export const NAV_LINKS = [
-  { label: "Product", href: "#features" },
-  { label: "Workflow", href: "#workflow" },
-  { label: "Customers", href: "#testimonials" },
-  { label: "Pricing", href: "#pricing" },
-  { label: "FAQ", href: "#faq" },
+  { label: "Features", href: "/features" },
+  { label: "Demo", href: "/demo" },
+  { label: "Pricing", href: "/pricing" },
+  { label: "Changelog", href: "/changelog" },
+  { label: "About", href: "/about" },
+] as const;
+
+export const FOOTER_GROUPS = [
+  {
+    title: "Product",
+    links: [
+      { label: "Features", href: "/features" },
+      { label: "Demo", href: "/demo" },
+      { label: "Pricing", href: "/pricing" },
+      { label: "Changelog", href: "/changelog" },
+      { label: "Status", href: "https://status.nebula.app" },
+    ],
+  },
+  {
+    title: "Company",
+    links: [
+      { label: "About", href: "/about" },
+      { label: "Customers", href: "/#testimonials" },
+      { label: "Contact", href: "/contact" },
+      { label: "Careers", href: "/about#careers" },
+    ],
+  },
+  {
+    title: "Resources",
+    links: [
+      { label: "Documentation", href: "/#" },
+      { label: "API", href: "/#" },
+      { label: "Community", href: "/#" },
+      { label: "Brand kit", href: "/#" },
+    ],
+  },
+  {
+    title: "Legal",
+    links: [
+      { label: "Privacy", href: "/legal/privacy" },
+      { label: "Terms", href: "/legal/terms" },
+      { label: "Security", href: "/legal/privacy#security" },
+      { label: "DPA", href: "/legal/terms#dpa" },
+    ],
+  },
 ] as const;
 
 export type Feature = {
@@ -278,4 +318,145 @@ export const LOGO_NAMES = [
   "Helio",
   "Atlas",
   "Vector",
+];
+
+export type ChangelogEntry = {
+  version: string;
+  date: string;
+  title: string;
+  tag: "feature" | "improvement" | "fix";
+  body: string;
+  highlights?: string[];
+};
+
+export const CHANGELOG: ChangelogEntry[] = [
+  {
+    version: "1.4.0",
+    date: "May 14, 2026",
+    title: "Workflow Studio, now with AI suggestions",
+    tag: "feature",
+    body: "We rebuilt the workflow editor from scratch. Drag-and-drop, keyboard-first, and a copilot that watches your moves and offers the next step.",
+    highlights: [
+      "Native branching with visual merges",
+      "Inline code blocks (TS, SQL, Python)",
+      "Per-step retry policies",
+      "Live cursors for team editing",
+    ],
+  },
+  {
+    version: "1.3.2",
+    date: "Apr 28, 2026",
+    title: "Faster Snowflake & BigQuery pushdowns",
+    tag: "improvement",
+    body: "Queries on warehouse sources are 3.4× faster on average. We're now pushing more of the plan to the source.",
+  },
+  {
+    version: "1.3.0",
+    date: "Apr 09, 2026",
+    title: "Postmortems, written for you",
+    tag: "feature",
+    body: "Nebula now drafts incident postmortems automatically. Pull in the relevant signals, write the timeline, and ship to your retrospective doc.",
+    highlights: [
+      "Auto-pulled timeline from Linear, GitHub, PagerDuty",
+      "5 Whys generator (editable)",
+      "Stored in workspace with full audit log",
+    ],
+  },
+  {
+    version: "1.2.4",
+    date: "Mar 22, 2026",
+    title: "SCIM 2.0 + bring-your-own-IdP",
+    tag: "feature",
+    body: "User and group provisioning now works with any SCIM 2.0 IdP. Okta, Entra ID, JumpCloud, and custom directories tested.",
+  },
+  {
+    version: "1.2.1",
+    date: "Mar 03, 2026",
+    title: "Fixes for EU residency exports",
+    tag: "fix",
+    body: "Resolved a bug where workspaces with strict EU residency saw export jobs queue indefinitely. Now resolves under 200ms.",
+  },
+];
+
+export type TeamMember = {
+  name: string;
+  role: string;
+  initials: string;
+};
+
+export const TEAM: TeamMember[] = [
+  { name: "Avery Chen", role: "Co-founder & CEO", initials: "AC" },
+  { name: "Jonas Weber", role: "Co-founder & CTO", initials: "JW" },
+  { name: "Lin Marquez", role: "Head of Design", initials: "LM" },
+  { name: "Ife Adeyemi", role: "Head of Engineering", initials: "IA" },
+  { name: "Noa Petersen", role: "Head of Customer", initials: "NP" },
+  { name: "Sasha Volkov", role: "Head of Operations", initials: "SV" },
+];
+
+export type PricingFeatureRow = {
+  group: string;
+  rows: {
+    label: string;
+    starter: string | boolean;
+    team: string | boolean;
+    enterprise: string | boolean;
+  }[];
+};
+
+export const PRICING_MATRIX: PricingFeatureRow[] = [
+  {
+    group: "Platform",
+    rows: [
+      { label: "Seats", starter: "Up to 5", team: "Unlimited", enterprise: "Unlimited" },
+      { label: "Workspaces", starter: "1", team: "5", enterprise: "Unlimited" },
+      { label: "Workflows", starter: "10", team: "Unlimited", enterprise: "Unlimited" },
+      { label: "History retention", starter: "7 days", team: "365 days", enterprise: "Custom" },
+    ],
+  },
+  {
+    group: "AI & automation",
+    rows: [
+      { label: "AI copilots", starter: false, team: true, enterprise: true },
+      { label: "Auto postmortems", starter: false, team: true, enterprise: true },
+      { label: "Custom models", starter: false, team: false, enterprise: true },
+    ],
+  },
+  {
+    group: "Security",
+    rows: [
+      { label: "SSO (SAML / OIDC)", starter: false, team: true, enterprise: true },
+      { label: "SCIM provisioning", starter: false, team: true, enterprise: true },
+      { label: "Audit log streaming", starter: false, team: false, enterprise: true },
+      { label: "Data residency", starter: false, team: "EU or US", enterprise: "EU, US, AP" },
+      { label: "SOC 2 Type II", starter: true, team: true, enterprise: true },
+    ],
+  },
+  {
+    group: "Support",
+    rows: [
+      { label: "Community", starter: true, team: true, enterprise: true },
+      { label: "Priority email", starter: false, team: true, enterprise: true },
+      { label: "Dedicated SA", starter: false, team: false, enterprise: true },
+      { label: "Uptime SLA", starter: "—", team: "99.9%", enterprise: "99.99%" },
+    ],
+  },
+];
+
+export const INTEGRATIONS = [
+  "Postgres",
+  "Snowflake",
+  "BigQuery",
+  "Redshift",
+  "GitHub",
+  "GitLab",
+  "Linear",
+  "Jira",
+  "Stripe",
+  "Segment",
+  "Datadog",
+  "PagerDuty",
+  "Slack",
+  "Notion",
+  "Intercom",
+  "HubSpot",
 ];

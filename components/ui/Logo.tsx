@@ -1,14 +1,15 @@
+import Link from "next/link";
 import { cn } from "@/lib/utils";
 
-type LogoProps = React.HTMLAttributes<HTMLAnchorElement> & {
+type LogoProps = Omit<React.ComponentProps<typeof Link>, "href"> & {
   size?: "sm" | "md";
 };
 
 export function Logo({ className, size = "md", ...props }: LogoProps) {
   const dim = size === "sm" ? "h-7 w-7" : "h-8 w-8";
   return (
-    <a
-      href="#"
+    <Link
+      href="/"
       aria-label="Nebula home"
       className={cn(
         "group inline-flex items-center gap-2.5 text-white",
@@ -38,6 +39,6 @@ export function Logo({ className, size = "md", ...props }: LogoProps) {
       <span className="font-display text-[17px] font-semibold tracking-tight">
         Nebula
       </span>
-    </a>
+    </Link>
   );
 }

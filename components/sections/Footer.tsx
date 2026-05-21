@@ -1,48 +1,8 @@
+import Link from "next/link";
+import { FOOTER_GROUPS } from "@/lib/data";
 import { Container } from "@/components/primitives/Container";
 import { Logo } from "@/components/ui/Logo";
-
-const FOOTER_GROUPS = [
-  {
-    title: "Product",
-    links: [
-      { label: "Features", href: "#features" },
-      { label: "Workflow", href: "#workflow" },
-      { label: "Pricing", href: "#pricing" },
-      { label: "Changelog", href: "#" },
-      { label: "Status", href: "#" },
-    ],
-  },
-  {
-    title: "Company",
-    links: [
-      { label: "About", href: "#" },
-      { label: "Careers", href: "#" },
-      { label: "Customers", href: "#testimonials" },
-      { label: "Press", href: "#" },
-      { label: "Contact", href: "#" },
-    ],
-  },
-  {
-    title: "Resources",
-    links: [
-      { label: "Documentation", href: "#" },
-      { label: "API", href: "#" },
-      { label: "Community", href: "#" },
-      { label: "Guides", href: "#" },
-      { label: "Brand", href: "#" },
-    ],
-  },
-  {
-    title: "Legal",
-    links: [
-      { label: "Privacy", href: "#" },
-      { label: "Terms", href: "#" },
-      { label: "Security", href: "#" },
-      { label: "DPA", href: "#" },
-      { label: "Cookies", href: "#" },
-    ],
-  },
-];
+import { NewsletterForm } from "@/components/sections/NewsletterForm";
 
 export function Footer() {
   return (
@@ -63,6 +23,7 @@ export function Footer() {
             <p className="max-w-xs text-sm leading-relaxed text-zinc-400">
               Workflow intelligence for the teams the world is built on.
             </p>
+            <NewsletterForm />
           </div>
 
           {FOOTER_GROUPS.map((group) => (
@@ -73,12 +34,12 @@ export function Footer() {
               <ul className="mt-5 space-y-3">
                 {group.links.map((link) => (
                   <li key={link.label}>
-                    <a
+                    <Link
                       href={link.href}
                       className="text-sm text-zinc-300 transition-colors hover:text-white"
                     >
                       {link.label}
-                    </a>
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -96,7 +57,7 @@ export function Footer() {
               All systems operational
             </span>
             <span>·</span>
-            <span>v1.0.0</span>
+            <span>v1.4.0</span>
           </div>
         </div>
       </Container>

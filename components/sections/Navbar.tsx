@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { AnimatePresence, motion, useScroll, useMotionValueEvent } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { NAV_LINKS } from "@/lib/data";
@@ -12,6 +14,7 @@ import { cn } from "@/lib/utils";
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const pathname = usePathname();
   const { scrollY } = useScroll();
 
   useMotionValueEvent(scrollY, "change", (latest) => {
@@ -52,23 +55,38 @@ export function Navbar() {
             <Logo />
 
             <ul className="hidden items-center gap-1 md:flex">
-              {NAV_LINKS.map((link) => (
-                <li key={link.href}>
-                  <a
-                    href={link.href}
-                    className="relative rounded-full px-3.5 py-1.5 text-sm text-zinc-300 transition-colors hover:text-white"
-                  >
-                    {link.label}
-                  </a>
-                </li>
-              ))}
+              {NAV_LINKS.map((link) => {
+                const active =
+                  pathname === link.href ||
+                  (link.href.length > 1 && pathname?.startsWith(link.href));
+                return (
+                  <li key={link.href}>
+                    <Link
+                      href={link.href}
+                      className={cn(
+                        "relative rounded-full px-3.5 py-1.5 text-sm transition-colors",
+                        active ? "text-white" : "text-zinc-400 hover:text-white",
+                      )}
+                    >
+                      {link.label}
+                      {active ? (
+                        <motion.span
+                          layoutId="nav-pill"
+                          transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                          className="absolute inset-0 -z-10 rounded-full bg-white/[0.06]"
+                        />
+                      ) : null}
+                    </Link>
+                  </li>
+                );
+              })}
             </ul>
 
             <div className="hidden items-center gap-2 md:flex">
-              <Button variant="ghost" size="sm" href="#login">
+              <Button variant="ghost" size="sm" href="/login">
                 Sign in
               </Button>
-              <Button variant="primary" size="sm" href="#cta" trailingIcon>
+              <Button variant="primary" size="sm" href="/signup" trailingIcon>
                 Get started
               </Button>
             </div>
@@ -104,21 +122,21 @@ export function Navbar() {
               <ul className="flex flex-col gap-1">
                 {NAV_LINKS.map((link) => (
                   <li key={link.href}>
-                    <a
+                    <Link
                       href={link.href}
                       onClick={() => setOpen(false)}
                       className="block rounded-xl px-4 py-3 text-base text-zinc-200 transition-colors hover:bg-white/[0.04] hover:text-white"
                     >
                       {link.label}
-                    </a>
+                    </Link>
                   </li>
                 ))}
               </ul>
               <div className="mt-4 flex flex-col gap-2 border-t border-white/10 pt-4">
-                <Button variant="secondary" size="md" href="#login">
+                <Button variant="secondary" size="md" href="/login">
                   Sign in
                 </Button>
-                <Button variant="primary" size="md" href="#cta" trailingIcon>
+                <Button variant="primary" size="md" href="/signup" trailingIcon>
                   Get started
                 </Button>
               </div>
